@@ -1,0 +1,56 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.4.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.20.1')
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.2.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+apply plugin: 'com.palantir.docker'
+
+group = 'com.alynes'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.data:spring-data-rest-hal-browser'
+	implementation 'org.glassfish.jersey.core:jersey-client:2.27'
+	implementation 'org.glassfish.jersey.media:jersey-media-json-jackson:2.27'
+	implementation 'org.glassfish.jersey.core:jersey-common:2.27'
+	implementation 'org.glassfish.jersey.inject:jersey-hk2:2.27'
+	implementation 'org.apache.commons:commons-lang3:3.7'
+	implementation 'commons-codec:commons-codec:1.11'
+	implementation 'net.jodah:failsafe:0.9.3'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+docker {
+	dependsOn build
+	name "${project.group}/${bootJar.baseName}"
+	files bootJar.archivePath
+	buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
+}
