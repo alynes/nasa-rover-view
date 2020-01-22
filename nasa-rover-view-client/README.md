@@ -1,4 +1,9 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Quick Start
+
+Run 'yarn install'
+Run 'yarn start'
+
+App will start and expect the app server to be on port '8080'
 
 ## Available Scripts
 

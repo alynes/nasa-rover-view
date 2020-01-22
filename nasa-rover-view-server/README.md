@@ -1,9 +1,10 @@
-# Getting Started
-Run './gradlew build' to build the app.
+# Quick Start
 
 Run './gradlew docker' to build a docker image of the app.
 
-To launch docker container with app, run 'docker run -p 8080:8080 -t com.alynes/nasa-rover-view-server -d'
+Run 'docker run -p 8080:8080 -t com.alynes/nasa-rover-view-server -d'
+
+This will launch the server app on port '8080' from a docker container.
 
 ### Reference Documentation
 For further reference, please consider the following sections:
